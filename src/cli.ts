@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
 import chalk from 'chalk';
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
-import { fileURLToPath } from 'url';
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = resolve(__filename, '..');
@@ -16,7 +16,7 @@ function getVersion(): string {
   const packageJsonPath = resolve(__dirname, '../package.json');
   const packageJsonContent = readFileSync(packageJsonPath, 'utf-8');
   const packageJson = JSON.parse(packageJsonContent) as PackageJSONConfig;
-  
+
   return packageJson.version;
 }
 
@@ -50,11 +50,11 @@ function importTSV(filePath: string): void {
     for (let i = 1; i < lines.length; i++) {
       const values = lines[i].split('\t');
       const entry: Record<string, string> = {};
-      
+
       headers.forEach((header, index) => {
         entry[header] = values[index];
       });
-      
+
       data.push(entry);
     }
 
@@ -92,4 +92,4 @@ function parseArgs(args: string[]): void {
   }
 }
 
-parseArgs(process.argv); 
+parseArgs(process.argv);

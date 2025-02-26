@@ -5,7 +5,7 @@ function printInfo(): void {
     Программа для создания и управления объявлениями.
     Пример:
         main.js --help
-    `); 
+    `);
 }
 
 function printHelp(): void {

@@ -90,4 +90,4 @@ export const Cities: Record<string, City> = {
       longitude: 6.776314
     }
   }
-}; 
+};
