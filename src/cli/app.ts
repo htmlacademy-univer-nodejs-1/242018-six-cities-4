@@ -14,7 +14,7 @@ export class CLIApplication {
 
   constructor(
     private readonly defaultCommand: string = '--help',
-    private readonly commandFolder: string = 'commands',
+    private readonly commandFolder: string = 'commands1',
   ) {
 
   }
@@ -53,6 +53,8 @@ export class CLIApplication {
       this.commands.set(name, command);
     });
   }
+
+  
 
   public getCommand(commandName: string): Command {
     return this.commands.get(commandName) ?? this.getDefaultCommand();
