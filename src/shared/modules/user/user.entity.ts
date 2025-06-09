@@ -5,7 +5,7 @@ import {
   prop,
 } from '@typegoose/typegoose';
 import { User, UserType } from '../../types/index.js';
-import { createSHA256 } from '../../helpers/hash.js';
+import { createSHA256 } from '../../utils/hash.js';
 import { DEFAULT_AVATAR_FILE_NAME } from './user.constant.js';
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging

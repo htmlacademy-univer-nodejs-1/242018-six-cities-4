@@ -1,7 +1,7 @@
 import { inject, injectable } from 'inversify';
 import { OfferService } from './offer-service.interface.js';
 import { Component } from '../../types/component.enum.js';
-import { Logger } from '../../libs/logger/index.js';
+import { Logger } from '../../core/logger/index.js';
 import { OfferEntity } from './offer.entity.js';
 import { types } from '@typegoose/typegoose';
 import { CreateOfferDto } from './dto/create-offer.dto.js';

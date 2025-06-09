@@ -3,9 +3,9 @@ import { StatusCodes } from 'http-status-codes';
 import { NextFunction, Request, Response } from 'express';
 import { ExceptionFilter } from './exception-filter.interface.js';
 import { HttpError } from '../errors/index.js';
-import { Logger } from '../../../shared/libs/logger/index.js';
+import { Logger } from '../../../shared/core/logger/index.js';
 import { Component } from '../../../shared/types/index.js';
-import { createErrorObject } from '../../../shared/helpers/index.js';
+import { createErrorObject } from '../../../shared/utils/index.js';
 
 @injectable()
 export class AppExceptionFilter implements ExceptionFilter {

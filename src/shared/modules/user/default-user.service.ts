@@ -4,7 +4,7 @@ import { UserService } from './user-service.interface.js';
 import { UserEntity } from './user.entity.js';
 import { inject, injectable } from 'inversify';
 import { Component } from '../../types/component.enum.js';
-import { Logger } from '../../libs/logger/index.js';
+import { Logger } from '../../core/logger/index.js';
 
 @injectable()
 export class DefaultUserService implements UserService {

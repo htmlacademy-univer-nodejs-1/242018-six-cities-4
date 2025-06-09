@@ -1,9 +1,9 @@
 import { inject, injectable } from 'inversify';
-import { Logger } from '../../libs/logger/index.js';
+import { Logger } from '../../core/logger/index.js';
 import { Component } from '../../types/index.js';
 import { CreateUserRequest } from './create-user-request.type.js';
-import { Config, RestSchema } from '../../libs/config/index.js';
-import { fillDTO } from '../../helpers/index.js';
+import { Config, RestSchema } from '../../core/config/index.js';
+import { fillDTO } from '../../utils/index.js';
 import { StatusCodes } from 'http-status-codes';
 import { LoginUserRequest } from './login-user-request.type.js';
 import { BaseController, HttpMethod, HttpError, ValidateDtoMiddleware, DocumentExistsMiddleware, UploadFileMiddleware, ValidateObjectIdMiddleware, PrivateRouteMiddleware } from '../../../rest/libs/index.js';

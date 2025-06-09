@@ -4,7 +4,7 @@ import { Response, Router } from 'express';
 import asyncHandler from 'express-async-handler';
 import { Controller } from './controller.interface.js';
 import { Route } from '../types/route.interface.js';
-import { Logger } from '../../../shared/libs/logger/index.js';
+import { Logger } from '../../../shared/core/logger/index.js';
 
 const DEFAULT_CONTENT_TYPE = 'application/json';
 

@@ -1,10 +1,10 @@
 import { inject, injectable } from 'inversify';
 import { Request, Response } from 'express';
 import { Component } from '../../types/index.js';
-import { Logger } from '../../libs/logger/index.js';
+import { Logger } from '../../core/logger/index.js';
 import { CommentService } from './comment-service.interface.js';
 import { OfferService } from '../offer/index.js';
-import { fillDTO } from '../../helpers/index.js';
+import { fillDTO } from '../../utils/index.js';
 import { BaseController, HttpMethod, ValidateDtoMiddleware, PrivateRouteMiddleware, DocumentExistsMiddleware, ValidateObjectIdMiddleware } from '../../../rest/libs/index.js';
 import { CreateCommentDto } from './dto/create-comment.dto.js';
 import { CreateCommentRequest } from './types/create-comment-request.type.js';
