@@ -1,13 +1,13 @@
 import { inject, injectable } from 'inversify';
 import { Request, Response } from 'express';
 
-import { Logger } from '../../libs/logger/index.js';
+import { Logger } from '../../core/logger/index.js';
 import { City, Component } from '../../types/index.js';
 import { DEFAULT_OFFER_COUNT } from './offer.constant.js';
 import { BaseController, CheckOwnerMiddleware, DocumentExistsMiddleware, HttpMethod, PrivateRouteMiddleware, ValidateDtoMiddleware, ValidateObjectIdMiddleware } from '../../../rest/libs/index.js';
 import { CreateOfferDto, OfferRdo, OfferService } from './index.js';
 import { CreateOfferRequest } from './create-offer-request.type.js';
-import { fillDTO } from '../../helpers/common.js';
+import { fillDTO } from '../../utils/common.js';
 import { ParamOfferId } from './types/param-offerid.type.js';
 import { CommentService } from '../comment/index.js';
 import { UpdateOfferDto } from './dto/update-offer.dto.js';

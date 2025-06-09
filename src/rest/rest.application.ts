@@ -1,10 +1,10 @@
 import { inject, injectable } from 'inversify';
 import express, { Express } from 'express';
-import { Logger } from '../shared/libs/logger/index.js';
-import { Config, RestSchema } from '../shared/libs/config/index.js';
+import { Logger } from '../shared/core/logger/index.js';
+import { Config, RestSchema } from '../shared/core/config/index.js';
 import { Component } from '../shared/types/index.js';
-import { DatabaseClient } from '../shared/libs/database-client/database-client.interface.js';
-import { getMongoURI } from '../shared/helpers/database.js';
+import { DatabaseClient } from '../shared/core/database-client/database-client.interface.js';
+import { getMongoURI } from '../shared/utils/database.js';
 import { Controller, ExceptionFilter } from './libs/index.js';
 import { ParseTokenMiddleware } from './libs/middleware/parse-token.middleware.js';
 import { STATIC_FILES_ROUTE, STATIC_UPLOAD_ROUTE } from './rest.constant.js';
