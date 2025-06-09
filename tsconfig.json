@@ -16,10 +16,11 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "experimentalDecorators": true,
     "sourceMap": true,
     "outDir": "./dist",
     "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "strictPropertyInitialization": false,
     "types": [
       "node",
     ],
@@ -36,5 +37,6 @@
   ],
   "ts-node": {
     "esm": true
-  }
+  },
+  "files": ["./custom.d.ts"]
 }
