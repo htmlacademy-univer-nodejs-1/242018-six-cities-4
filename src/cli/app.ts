@@ -7,14 +7,14 @@ import fs from 'node:fs';
 import path from 'node:path';
 import url from 'node:url';
 
-type CommandCollection1 = Map<string, Command>;
+type CommandCollection = Map<string, Command>;
 
 export class CLIApplication {
-  private commands: CommandCollection1 = new Map();
+  private commands: CommandCollection = new Map();
 
   constructor(
     private readonly defaultCommand: string = '--help',
-    private readonly commandFolder: string = 'commands1',
+    private readonly commandFolder: string = 'commands',
   ) {
 
   }
@@ -53,8 +53,6 @@ export class CLIApplication {
       this.commands.set(name, command);
     });
   }
-
-  
 
   public getCommand(commandName: string): Command {
     return this.commands.get(commandName) ?? this.getDefaultCommand();

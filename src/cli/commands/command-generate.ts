@@ -20,7 +20,7 @@ export default class GenerateCommand implements Command {
     }
   }
 
-  private async write (filepath: string, offerCount: number) {
+  private async write(filepath: string, offerCount: number) {
     const tsvOfferGenerator = new TsvOfferGenerator(this.initialData);
     const tsvFileWriter = new TsvFileWriter(filepath);
 
