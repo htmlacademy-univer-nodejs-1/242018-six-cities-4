@@ -10,7 +10,8 @@ export class RestConfig implements Config<RestSchema> {
   private readonly config: RestSchema;
 
   constructor(
-    @inject(Component.Logger) private readonly logger: Logger
+    @inject(Component.Logger)
+    private readonly logger: Logger
   ) {
     const parsedOutput = config();
 
@@ -18,7 +19,7 @@ export class RestConfig implements Config<RestSchema> {
       throw new Error('Can\'t read .env file. Perhaps the file does not exists.');
     }
 
-    configRestSchema.load({});
+    configRestSchema.load(parsedOutput.parsed || {});
     configRestSchema.validate({ allowed: 'strict', output: this.logger.info });
 
     this.config = configRestSchema.getProperties();

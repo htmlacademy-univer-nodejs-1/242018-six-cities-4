@@ -31,19 +31,22 @@ export class OfferRdo {
   public isFavorite: boolean;
 
   @Expose()
-  public rate: number;
+  public rating: number;
 
   @Expose()
   public type: HouseType;
 
   @Expose()
-  public roomsCount: number;
+  public roomCount: number;
 
   @Expose()
   public guestCount: number;
 
   @Expose()
   public price: number;
+
+  @Expose()
+  public commentsCount: number;
 
   @Expose()
   public amenities: Amenity[];

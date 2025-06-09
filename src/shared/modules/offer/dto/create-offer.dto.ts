@@ -1,44 +1,43 @@
-import { IsNotEmpty, MinLength, MaxLength, ArrayMaxSize, ArrayMinSize, IsArray, IsEnum, IsBoolean, IsInt, Max, Min, IsMongoId } from 'class-validator';
+import { IsNotEmpty, MinLength, MaxLength, ArrayMaxSize, ArrayMinSize, IsArray, IsEnum, IsBoolean, IsInt, Max, Min, IsString } from 'class-validator';
 import {
   City,
   Amenity,
   HouseType,
   Coordinates,
-  User,
 } from '../../../types/index.js';
-import { CreateOfferValidationMessage } from './create-offer.messages.js';
+import { CreateOfferMessages } from './create-offer.messages.js';
 
 export class CreateOfferDto {
   @IsNotEmpty()
-  @MinLength(10, { message: CreateOfferValidationMessage.title.minLength })
-  @MaxLength(100, { message: CreateOfferValidationMessage.title.maxLength })
+  @MinLength(10, { message: CreateOfferMessages.title.minLength })
+  @MaxLength(100, { message: CreateOfferMessages.title.maxLength })
   public title: string;
 
   @IsNotEmpty()
   @MinLength(20, {
-    message: CreateOfferValidationMessage.description.minLength,
+    message: CreateOfferMessages.description.minLength,
   })
   @MaxLength(1024, {
-    message: CreateOfferValidationMessage.description.maxLength,
+    message: CreateOfferMessages.description.maxLength,
   })
   public description: string;
 
-  @IsNotEmpty({ message: CreateOfferValidationMessage.image.empty })
+  @IsNotEmpty({ message: CreateOfferMessages.image.empty })
   public image: string;
 
   @IsNotEmpty()
-  @IsInt({ message: CreateOfferValidationMessage.price.invalidFormat })
-  @Min(100, { message: CreateOfferValidationMessage.price.minValue })
-  @Max(100000, { message: CreateOfferValidationMessage.price.maxValue })
+  @IsInt({ message: CreateOfferMessages.price.invalidFormat })
+  @Min(100, { message: CreateOfferMessages.price.minValue })
+  @Max(100000, { message: CreateOfferMessages.price.maxValue })
   public price: number;
 
   @IsNotEmpty()
-  @IsEnum(City, { message: CreateOfferValidationMessage.city.invalid })
+  @IsEnum(City, { message: CreateOfferMessages.city.invalid })
   public city: City;
 
-  @IsArray({ message: CreateOfferValidationMessage.images.invalidFormat })
-  @ArrayMinSize(6, { message: CreateOfferValidationMessage.images.count })
-  @ArrayMaxSize(6, { message: CreateOfferValidationMessage.images.count })
+  @IsArray({ message: CreateOfferMessages.images.invalidFormat })
+  @ArrayMinSize(6, { message: CreateOfferMessages.images.count })
+  @ArrayMaxSize(6, { message: CreateOfferMessages.images.count })
   @IsNotEmpty({ each: true })
   public images: string[];
 
@@ -47,42 +46,38 @@ export class CreateOfferDto {
   public isPremium: boolean;
 
   @IsNotEmpty()
-  @IsInt({ message: CreateOfferValidationMessage.rating.invalidFormat })
-  @Min(1, { message: CreateOfferValidationMessage.rating.minValue })
-  @Max(5, { message: CreateOfferValidationMessage.rating.maxValue })
+  @IsInt({ message: CreateOfferMessages.rating.invalidFormat })
+  @Min(1, { message: CreateOfferMessages.rating.minValue })
+  @Max(5, { message: CreateOfferMessages.rating.maxValue })
   public rating: number;
 
   @IsNotEmpty()
-  @IsEnum(HouseType, { message: CreateOfferValidationMessage.type.invalid })
+  @IsEnum(HouseType, { message: CreateOfferMessages.type.invalid })
   public type: HouseType;
 
   @IsNotEmpty()
-  @IsInt({ message: CreateOfferValidationMessage.bedrooms.invalidFormat })
-  @Min(1, { message: CreateOfferValidationMessage.bedrooms.minValue })
-  @Max(8, { message: CreateOfferValidationMessage.bedrooms.maxValue })
+  @IsInt({ message: CreateOfferMessages.bedrooms.invalidFormat })
+  @Min(1, { message: CreateOfferMessages.bedrooms.minValue })
+  @Max(8, { message: CreateOfferMessages.bedrooms.maxValue })
   public roomCount: number;
 
   @IsNotEmpty()
-  @IsInt({ message: CreateOfferValidationMessage.maxAdults.invalidFormat })
-  @Min(1, { message: CreateOfferValidationMessage.maxAdults.minValue })
-  @Max(10, { message: CreateOfferValidationMessage.maxAdults.maxValue })
+  @IsInt({ message: CreateOfferMessages.maxAdults.invalidFormat })
+  @Min(1, { message: CreateOfferMessages.maxAdults.minValue })
+  @Max(10, { message: CreateOfferMessages.maxAdults.maxValue })
   public guestCount: number;
 
-  @IsArray({ message: CreateOfferValidationMessage.amenities.invalidFormat })
+  @IsArray({ message: CreateOfferMessages.amenities.invalidFormat })
   @IsEnum(Amenity, {
     each: true,
-    message: CreateOfferValidationMessage.amenities.invalidValue,
+    message: CreateOfferMessages.amenities.invalidValue,
   })
-  @ArrayMinSize(1, { message: CreateOfferValidationMessage.amenities.minSize })
+  @ArrayMinSize(1, { message: CreateOfferMessages.amenities.minSize })
   public amenities: Amenity[];
 
   @IsNotEmpty()
-  @IsMongoId({ message: CreateOfferValidationMessage.userId.invalidId })
+  @IsString()
   public user: string;
-
-  @IsNotEmpty()
-  @IsInt()
-  public commentsCount: number;
 
   @IsNotEmpty()
   public coordinates: Coordinates;

@@ -7,7 +7,10 @@ import { BaseUserException } from './errors/index.js';
 
 @injectable()
 export class AuthExceptionFilter implements ExceptionFilter {
-  constructor(@inject(Component.Logger) private readonly logger: Logger) {
+  constructor(
+    @inject(Component.Logger)
+    private readonly logger: Logger
+  ) {
     this.logger.info('Register AuthExceptionFilter');
   }
 

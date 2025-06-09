@@ -13,6 +13,9 @@ export type RestSchema = {
   DB_NAME: string;
   UPLOAD_DIRECTORY: string;
   STATIC_DIRECTORY_PATH: string;
+  STATIC_UPLOAD_ROUTE: string;
+  STATIC_FILES_ROUTE: string;
+  DEFAULT_USER_PASSWORD: string;
   JWT_SECRET: string;
 };
 
@@ -76,5 +79,23 @@ export const configRestSchema = convict<RestSchema>({
     format: String,
     env: 'STATIC_DIRECTORY_PATH',
     default: null,
+  },
+  STATIC_UPLOAD_ROUTE: {
+    doc: 'Static files upload route',
+    format: String,
+    env: 'STATIC_UPLOAD_ROUTE',
+    default: '/upload',
+  },
+  STATIC_FILES_ROUTE: {
+    doc: 'Static files route',
+    format: String,
+    env: 'STATIC_FILES_ROUTE',
+    default: '/static',
+  },
+  DEFAULT_USER_PASSWORD: {
+    doc: 'Default password for user',
+    format: String,
+    env: 'DEFAULT_USER_PASSWORD',
+    default: 'very-secret-password-1337!',
   },
 });

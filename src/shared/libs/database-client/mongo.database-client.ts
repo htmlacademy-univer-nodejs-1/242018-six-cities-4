@@ -12,7 +12,10 @@ export class MongoDatabaseClient implements DatabaseClient {
   private mongoose: typeof Mongoose | undefined;
   private isConnected: boolean;
 
-  constructor(@inject(Component.Logger) private readonly logger: Logger) {
+  constructor(
+    @inject(Component.Logger)
+    private readonly logger: Logger
+  ) {
     this.isConnected = false;
   }
 

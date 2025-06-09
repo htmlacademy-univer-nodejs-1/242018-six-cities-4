@@ -1,6 +1,6 @@
 import { City } from './city.enum.js';
 import { HouseType } from './house-type.enum.js';
-import { Amenity } from './facilities.type.js';
+import { Amenity } from './amenity.enum.js';
 import { User } from './user.type.js';
 import { Coordinates } from './coordinates.js';
 

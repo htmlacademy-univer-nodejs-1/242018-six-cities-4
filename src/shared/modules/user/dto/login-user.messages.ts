@@ -1,4 +1,4 @@
-export const CreateLoginUserMessage = {
+export const USER_LOGIN_MESSAGES = {
   email: {
     invalidFormat:
       'Поле "email" должно содержать корректный адрес электронной почты.',

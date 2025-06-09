@@ -1,4 +1,4 @@
-export const CreateOfferValidationMessage = {
+export const CreateOfferMessages = {
   title: {
     minLength: 'Название должно содержать минимум 10 символов.',
     maxLength: 'Название не может превышать 100 символов.',
@@ -58,4 +58,4 @@ export const CreateOfferValidationMessage = {
   userId: {
     invalidId: 'Недопустимый идентификатор пользователя (MongoID).',
   },
-};
+} as const;

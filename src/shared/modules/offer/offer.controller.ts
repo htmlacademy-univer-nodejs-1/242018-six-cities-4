@@ -4,13 +4,12 @@ import { Request, Response } from 'express';
 import { Logger } from '../../libs/logger/index.js';
 import { City, Component } from '../../types/index.js';
 import { DEFAULT_OFFER_COUNT } from './offer.constant.js';
-import { StatusCodes } from 'http-status-codes';
-import { BaseController, CheckOwnerMiddleware, DocumentExistsMiddleware, HttpError, HttpMethod, PrivateRouteMiddleware, ValidateDtoMiddleware, ValidateObjectIdMiddleware } from '../../../rest/libs/index.js';
+import { BaseController, CheckOwnerMiddleware, DocumentExistsMiddleware, HttpMethod, PrivateRouteMiddleware, ValidateDtoMiddleware, ValidateObjectIdMiddleware } from '../../../rest/libs/index.js';
 import { CreateOfferDto, OfferRdo, OfferService } from './index.js';
 import { CreateOfferRequest } from './create-offer-request.type.js';
 import { fillDTO } from '../../helpers/common.js';
 import { ParamOfferId } from './types/param-offerid.type.js';
-import { CommentRdo, CommentService } from '../comment/index.js';
+import { CommentService } from '../comment/index.js';
 import { UpdateOfferDto } from './dto/update-offer.dto.js';
 import { ParamCity } from './types/param-city.type.js';
 
@@ -47,6 +46,19 @@ export class OfferController extends BaseController {
     });
 
     this.addRoute({
+      path: '/favorites',
+      method: HttpMethod.Get,
+      handler: this.getFavorites,
+      middlewares: [new PrivateRouteMiddleware()],
+    });
+
+    this.addRoute({
+      path: '/:city/premium',
+      method: HttpMethod.Get,
+      handler: this.getPremium,
+    });
+
+    this.addRoute({
       path: '/:offerId',
       method: HttpMethod.Get,
       handler: this.show,
@@ -79,19 +91,6 @@ export class OfferController extends BaseController {
         new DocumentExistsMiddleware(this.offerService, 'Offer', 'offerId'),
         new CheckOwnerMiddleware(this.offerService),
       ],
-    });
-
-    this.addRoute({
-      path: '/:city/premium',
-      method: HttpMethod.Get,
-      handler: this.getPremium,
-    });
-
-    this.addRoute({
-      path: '/favorites',
-      method: HttpMethod.Get,
-      handler: this.getFavorites,
-      middlewares: [new PrivateRouteMiddleware()],
     });
 
     this.addRoute({
@@ -136,7 +135,7 @@ export class OfferController extends BaseController {
   }
 
   async show({ params, tokenPayload }: Request<ParamOfferId>, res: Response) {
-    const offer = await this.offerService.findById(params.offerId, tokenPayload.id);
+    const offer = await this.offerService.findById(params.offerId, tokenPayload?.id);
     this.ok(res, fillDTO(OfferRdo, offer));
   }
 
@@ -161,7 +160,7 @@ export class OfferController extends BaseController {
   ) {
     const offers = await this.offerService.findPremiumOffersByCity(
       params.city as City,
-      tokenPayload.id
+      tokenPayload?.id
     );
     this.ok(res, fillDTO(OfferRdo, offers));
   }

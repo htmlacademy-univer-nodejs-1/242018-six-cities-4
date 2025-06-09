@@ -6,7 +6,7 @@ import { DocumentExists } from '../../../rest/libs/types/document-exists.interfa
 export interface UserService extends DocumentExists {
   create(dto: CreateUserDto, salt: string): Promise<types.DocumentType<UserEntity>>;
 
-  findByEmail(mail: string): Promise<types.DocumentType<UserEntity> | null>;
+  findByEmail(email: string): Promise<types.DocumentType<UserEntity> | null>;
 
   findOrCreate(
     dto: CreateUserDto,
