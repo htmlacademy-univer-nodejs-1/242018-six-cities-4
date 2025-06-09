@@ -98,20 +98,6 @@ paths:
         '401':
           description: Пользователь не авторизован.
 
-  /users/logout:
-    post:
-      tags:
-        - users
-      summary: Выход пользователя (разрыв сессии)
-      description: Завершает пользовательский сеанс.
-      security:
-        - bearerAuth: []
-      responses:
-        '204':
-          description: Сессия завершена успешно.
-        '401':
-          description: Пользователь не авторизован.
-
   /offers:
     get:
       tags:
@@ -406,7 +392,7 @@ components:
       type: object
 
       properties:
-        mail:
+        email:
           type: string
           example: keks@htmlacademy.ru
 
@@ -431,11 +417,7 @@ components:
       type: object
 
       properties:
-        id:
-          type: string
-          example: 6329c3d6a04ab1061c6425ea
-
-        mail:
+        email:
           type: string
           example: keks@htmlacademy.ru
 
@@ -468,12 +450,7 @@ components:
           type: string
           example: image.jpg
 
-        date:
-          type: string
-          format: date
-          example: 2025-02-12
-
-        cost:
+        price:
           type: number
           example: 180
 
@@ -482,7 +459,7 @@ components:
           enum: [Paris, Cologne, Brussels, Amsterdam, Hamburg, Dusseldorf]
           example: Paris
 
-        gallery:
+        images:
           type: array
           items:
             type: string
@@ -492,15 +469,11 @@ components:
           type: boolean
           example: true
 
-        isFavorite:
-          type: boolean
-          example: true
-
         rating:
           type: number
           example: 3.8
 
-        apartmentType:
+        type:
           type: string
           enum: [apartment, house, room, hotel]
           example: apartment
@@ -529,10 +502,6 @@ components:
               ]
             example: [Breakfast, Washer]
 
-        owner:
-          type: string
-          example: 6329c3d6a04ab1061c6425ea
-
         coordinates:
           type: object
           properties:
@@ -560,29 +529,25 @@ components:
           type: string
           example: Big house in the center of the city with all amenities
 
-        previewImage:
-          type: string
-          example: image.jpg
-
         postDate:
           type: string
           format: date
-          example: 2025-02-12
+          example: 2025-05-29T20:44:46.553Z
 
-        price:
-          type: number
-          example: 180
-
-        city:
+        image:
           type: string
-          enum: [Paris, Cologne, Brussels, Amsterdam, Hamburg, Dusseldorf]
-          example: Paris
+          example: image.jpg
 
         images:
           type: array
           items:
             type: string
           example: [image1.jpg, image2.jpg]
+
+        city:
+          type: string
+          enum: [Paris, Cologne, Brussels, Amsterdam, Hamburg, Dusseldorf]
+          example: Paris
 
         isPremium:
           type: boolean
@@ -592,22 +557,18 @@ components:
           type: boolean
           example: true
 
-        rate:
-          type: number
-          example: 3.8
-
         type:
           type: string
-          enum: [apartment, house, room, hotel]
+          enum: [Apartment, House, Room, Hotel]
           example: apartment
-
-        roomsCount:
-          type: integer
-          example: 2
 
         guestCount:
           type: integer
           example: 4
+
+        price:
+          type: number
+          example: 180
 
         amenities:
           type: array
@@ -625,9 +586,16 @@ components:
               ]
             example: [Breakfast, Washer]
 
-        owner:
-          type: string
-          example: 6329c3d6a04ab1061c6425ea
+        user:
+          $ref: "#/components/schemas/user"
+
+        rating:
+          type: number
+          example: 3.8
+
+        roomCount:
+          type: integer
+          example: 2
 
         commentsCount:
           type: integer
@@ -658,14 +626,6 @@ components:
           type: number
           example: 3.8
 
-        offerId:
-          type: string
-          example: 6329c3d6a04ab1061c6425ea
-
-        userId:
-          type: string
-          example: 6329c3d6a04ab1061c6425ea
-
     comment:
       type: object
 
@@ -683,19 +643,14 @@ components:
         postDate:
           type: string
           format: date
-          example: 2025-02-12
+          example: 2025-05-31T14:39:06.782Z
 
         rating:
           type: number
           example: 4.5
 
         author:
-          type: string
-          example: 6329c3d6a04ab1061c6425ea
-
-        offer:
-          type: string
-          example: 6329c3d6a04ab1061c6425ea
+          $ref: "#/components/schemas/user"
 
   securitySchemes:
     bearerAuth:
