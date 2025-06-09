@@ -1,9 +1,10 @@
 export function getMongoURI(
+  host: string,
   username: string,
   password: string,
   port: string,
   databaseName: string
-): {
+) : {
   uri: string;
   params: {
     authSource: string;
@@ -12,7 +13,7 @@ export function getMongoURI(
   };
 } {
   return {
-    uri: `mongodb://localhost:${port}/${databaseName}`,
+    uri: `mongodb://${host}:${port}/${databaseName}`,
     params: {
       authSource: 'admin',
       user: username,

@@ -1,0 +1,33 @@
+# Пользователи
+## Создать нового пользователя
+
+POST http://localhost:8080/users/register HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "test@test.test",
+  "avatar": "test.png",
+  "name": "Jack",
+  "type": "Base",
+  "password": "test1337"
+}
+
+###
+
+## Авторизовать пользователя
+
+POST http://localhost:8080/users/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "test@test.test",
+  "password": "test1337"
+}
+
+###
+
+## Проверить токен пользователя
+GET http://localhost:8080/users/login HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRlc3RAdGVzdC50ZXN0IiwibmFtZSI6IkphY2siLCJ0eXBlIjoiQmFzZSIsImlkIjoiNjgzYjU4ZjIwNTVjODQ5MzFjNDUwN2MxIiwiaWF0IjoxNzQ4NzE5ODk0LCJleHAiOjE3NDg4OTI2OTR9.fmKbe4_TffXmfrAjgTz_YZTHD3z7_uwvH-xhwXwUNHM
+
+###

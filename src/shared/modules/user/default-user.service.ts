@@ -24,22 +24,22 @@ export class DefaultUserService implements UserService {
     user.setPassword(dto.password, salt);
 
     const result = await this.userModel.create(user);
-    this.logger.info(`New user created: ${user.mail}`);
+    this.logger.info(`New user created: ${user.email}`);
 
     return result;
   }
 
   public async findByEmail(
-    mail: string
+    email: string
   ): Promise<types.DocumentType<UserEntity> | null> {
-    return this.userModel.findOne({ mail });
+    return this.userModel.findOne({ email });
   }
 
   public async findOrCreate(
     dto: CreateUserDto,
     salt: string
   ): Promise<types.DocumentType<UserEntity>> {
-    const existedUser = await this.findByEmail(dto.mail);
+    const existedUser = await this.findByEmail(dto.email);
 
     if (existedUser) {
       return existedUser;

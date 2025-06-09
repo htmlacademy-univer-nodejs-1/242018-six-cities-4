@@ -19,12 +19,12 @@ export function createOffer(offerData: string): Offer {
     isPremium,
     rating,
     houseType,
-    roomsCount,
+    roomCount,
     guestCount,
     rentalCost,
     amenities,
     username,
-    mail,
+    email,
     avatar,
     userType,
     commentsCount,
@@ -38,7 +38,7 @@ export function createOffer(offerData: string): Offer {
 
   const user: User = {
     name: username,
-    mail,
+    email,
     avatar,
     type: UserType[userType as keyof typeof UserType] ?? undefined,
   };
@@ -53,7 +53,7 @@ export function createOffer(offerData: string): Offer {
     isPremium: isPremium === 'true',
     rating: Number(rating),
     type: HouseType[houseType as keyof typeof HouseType] ?? HouseType.apartment,
-    roomCount: Number(roomsCount),
+    roomCount: Number(roomCount),
     guestCount: Number(guestCount),
     price: Number(rentalCost),
     amenities: amenities.split(',') as Amenity[],

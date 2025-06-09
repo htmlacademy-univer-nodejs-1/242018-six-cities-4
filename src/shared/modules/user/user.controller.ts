@@ -73,12 +73,12 @@ export class UserController extends BaseController {
     { body }: CreateUserRequest,
     res: Response
   ): Promise<void> {
-    const existsUser = await this.userService.findByEmail(body.mail);
+    const existsUser = await this.userService.findByEmail(body.email);
 
     if (existsUser) {
       throw new HttpError(
         StatusCodes.CONFLICT,
-        `User with email «${body.mail}» exists.`,
+        `User with email «${body.email}» exists.`,
         'UserController'
       );
     }
@@ -98,7 +98,6 @@ export class UserController extends BaseController {
     const user = await this.authService.verify(body);
     const token = await this.authService.authenticate(user);
     const responseData = fillDTO(LoggedUserRdo, {
-      email: user.mail,
       token,
     });
     this.ok(res, responseData);

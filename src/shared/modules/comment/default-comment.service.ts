@@ -1,8 +1,7 @@
 import { inject, injectable } from 'inversify';
 import { Component } from '../../types/index.js';
 import { DocumentType, types } from '@typegoose/typegoose';
-import { CreateCommentDto } from './dto/create-comment.dto.js';
-import { CommentEntity, CommentService } from './index.js';
+import { CommentEntity, CommentService, CreateCommentDto } from './index.js';
 
 import {
   DEFAULT_SORT_TYPE,
@@ -14,7 +13,9 @@ export class DefaultCommentService implements CommentService {
   constructor(
     @inject(Component.CommentModel)
     private readonly commentModel: types.ModelType<CommentEntity>
-  ) {}
+  ) {
+
+  }
 
   public async create(
     dto: CreateCommentDto

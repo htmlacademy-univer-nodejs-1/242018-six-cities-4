@@ -66,7 +66,7 @@ export class OfferEntity extends defaultClasses.TimeStamps {
   public type: HouseType;
 
   @prop({ type: Number })
-  public roomsCount: number;
+  public roomCount: number;
 
   @prop({ type: Number })
   public guestCount: number;
