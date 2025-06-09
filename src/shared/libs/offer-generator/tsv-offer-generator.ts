@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 
-import {City, Facilities, HouseType, MockServerData, UserType} from '../../types/index.js';
+import {City, Amenity, HouseType, MockServerData, UserType} from '../../types/index.js';
 import {generateRandomValue, getRandomItem, getRandomItems} from '../../helpers/index.js';
 
 import {OfferGenerator} from './offer-generator.interface.js';
@@ -20,20 +20,21 @@ export class TsvOfferGenerator implements OfferGenerator {
     const postDate = dayjs().subtract(generateRandomValue(FIRST_WEE_DAY, LAST_WEE_DAY), 'day').toISOString();
     const city = getRandomItem(Object.values(City));
     const previewPath = getRandomItem(this.mockData.houseImages);
-    const imagePaths = getRandomItems(this.mockData.houseImages).join(', ');
+    const imagePaths = getRandomItems(this.mockData.houseImages).join(',');
     const isPremium = generateRandomValue(0, 1) ? 'true' : 'false';
-    const isFavorites = generateRandomValue(0, 1) ? 'true' : 'false';
     const rating = generateRandomValue(1, 5);
     const houseType = getRandomItem(Object.values(HouseType));
     const roomsCount = generateRandomValue(1, 8);
     const guestCount = generateRandomValue(1, 8);
     const rentalCost = generateRandomValue(MIN_PRICE, MAX_PRICE);
-    const facilities = getRandomItem(Object.values(Facilities));
-    const commentsCount = 0;
+    const amenities = getRandomItems(Object.values(Amenity));
+    const commentsCount = generateRandomValue(0, 10);
+
     const coordinates = [
       generateRandomValue(0, 10, 3),
       generateRandomValue(0, 10, 3)
-    ].join('; ');
+    ].join(';');
+
     const username = getRandomItem(this.mockData.username);
     const email = getRandomItem(this.mockData.email);
     const avatarPath = getRandomItem(this.mockData.avatarImage);
@@ -41,9 +42,9 @@ export class TsvOfferGenerator implements OfferGenerator {
 
     return [
       title, description, postDate, city,
-      previewPath, imagePaths, isPremium, isFavorites,
+      previewPath, imagePaths, isPremium,
       rating, houseType, roomsCount, guestCount,
-      rentalCost, facilities,
+      rentalCost, amenities,
       username, email, avatarPath, userType,
       commentsCount, coordinates
     ].join('\t');

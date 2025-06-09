@@ -12,7 +12,7 @@ export default class HelpCommand implements Command {
 Использование: ${chalk.bold('cli [options]')}
 Опции:
   ${chalk.green('--version')} ${chalk.gray('вывод номер версии')}
-  ${chalk.yellow('--import <path>')}  ${chalk.gray('импортирует данные из TSV')}
+  ${chalk.yellow('--import <filename> <login> <password> <port> <dbname> <salt>')}  ${chalk.gray('импортирует данные из TSV')}
   ${chalk.magenta('--generate <n> <filepath> <url>')} ${chalk.gray('генерирует произвольное количество тестовых данных')}
   ${chalk.cyan('--help')} ${chalk.gray('отобразить справку')}'
 

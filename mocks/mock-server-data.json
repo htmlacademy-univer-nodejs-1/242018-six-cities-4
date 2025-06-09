@@ -1,0 +1,40 @@
+{
+  "api": {
+    "title": [
+      "Современный пентхаус с видом на город",
+      "Компактная студия в центре",
+      "Квартира рядом с метро",
+      "Элитные апартаменты в Москва-Сити"
+    ],
+    "description": [
+      "Просторный 2-комнатный пентхаус с панорамным видом на город. Высокие потолки 3,6 м, современный ремонт и удобная планировка.",
+      "Уютная студия с дизайнерским ремонтом, идеально подходит для комфортного проживания.",
+      "Светлая 1-комнатная квартира с евроремонтом, расположенная в шаговой доступности от метро.",
+      "Роскошные апартаменты в престижном комплексе с видом на Москву-Сити."
+    ],
+    "houseImages": [
+      "https://images.cdn-cian.ru/images/2399639218-4.jpg",
+      "https://images.cdn-cian.ru/images/2347835113-4.jpg",
+      "https://images.cdn-cian.ru/images/2352018109-4.jpg",
+      "https://images.cdn-cian.ru/images/kvartira-moskva-1y-krasnogvardeyskiy-proezd-2378816333-4.jpg"
+    ],
+    "username": [
+      "Алексей Смирнов",
+      "Мария Кузнецова",
+      "Дмитрий Волков",
+      "Елена Иванова"
+    ],
+    "email": [
+      "alex@example.com",
+      "maria@example.com",
+      "dmitry@example.com",
+      "elena@example.com"
+    ],
+    "avatarImage": [
+      "https://static10.tgstat.ru/channels/_0/6b/6bb8cd44cbf8fd6ff6cdc2a8fcc7af0f.jpg",
+      "https://telegra.ph/file/38e46e15fa3a94d8cb61d.jpg",
+      "https://www.kino-teatr.ru/news/8994/90430.jpg",
+      "https://www.kino-teatr.ru/news/9262/92312.jpg"
+    ]
+  }
+}
