@@ -75,11 +75,9 @@ export class CreateOfferDto {
   @ArrayMinSize(1, { message: CreateOfferMessages.amenities.minSize })
   public amenities: Amenity[];
 
+  @IsNotEmpty()
   @IsString()
-  public user: string = '';
-
-  @IsInt()
-  public commentsCount: number = 0;
+  public user: string;
 
   @IsNotEmpty()
   public coordinates: Coordinates;

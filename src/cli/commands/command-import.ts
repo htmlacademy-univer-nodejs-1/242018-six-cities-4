@@ -43,7 +43,7 @@ export default class ImportCommand implements Command {
       this.salt
     );
 
-    await this.offerService.create({ ...offer, user: user });
+    await this.offerService.create({ ...offer, user: user.id });
   }
 
   public getName(): string {
@@ -62,8 +62,8 @@ export default class ImportCommand implements Command {
   }
 
   public async execute(_parameters: string[]) {
-    const [filename, login, password, port, dbname, salt] = _parameters;
-    const uri = getMongoURI(login, password, port, dbname);
+    const [filename, host, login, password, port, dbname, salt] = _parameters;
+    const uri = getMongoURI(host, login, password, port, dbname);
     this.salt = salt;
 
     await this.databaseClient.connect(uri);
