@@ -1,12 +1,29 @@
 openapi: 3.1.0
 info:
-  title: API сервер для проекта «Шесть городов».
+  title: API сервер для проекта «Шесть городов»
   description: |-
-    * Список ресурсов и маршрутов сервера «Шесть городов».
+    REST API для платформы аренды жилья "Шесть городов".
+    
+    **Основные возможности:**
+    * Управление предложениями по аренде жилья
+    * Система пользователей с регистрацией и авторизацией
+    * Комментарии и рейтинги предложений
+    * Система избранного
+    * Премиум предложения по городам
+    
+    **Поддерживаемые города:** Paris, Cologne, Brussels, Amsterdam, Hamburg, Dusseldorf
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
   version: 2.0.0
+  contact:
+    name: API Support
+    email: api-support@example.com
+servers:
+  - url: http://localhost:4000/api
+    description: Development server
+  - url: https://api.six-cities.com
+    description: Production server
 tags:
   - name: offers
     description: Действия с объявлениями.
@@ -37,8 +54,19 @@ paths:
               schema:
                 $ref: '#/components/schemas/user'
 
+        '400':
+          description: Некорректные данные запроса.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+
         '409':
           description: Пользователь с таким email уже существует.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
 
   /users/login:
     post:
@@ -76,10 +104,23 @@ paths:
                   token:
                     type: string
                     example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+                  user:
+                    $ref: '#/components/schemas/user'
+                required:
+                  - token
+                  - user
+        '400':
+          description: Некорректные данные запроса.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
         '401':
           description: Неверный логин или пароль.
-        '404':
-          description: Пользователь не найден.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
 
     get:
       tags:
@@ -109,8 +150,31 @@ paths:
           in: query
           schema:
             type: integer
+            minimum: 1
+            maximum: 60
+            default: 60
             example: 60
           description: Количество предложений для получения с сервера
+        - name: city
+          in: query
+          schema:
+            type: string
+            enum: [Paris, Cologne, Brussels, Amsterdam, Hamburg, Dusseldorf]
+          description: Фильтр по городу
+        - name: sortBy
+          in: query
+          schema:
+            type: string
+            enum: [price, rating, date]
+            default: date
+          description: Сортировка предложений
+        - name: sortOrder
+          in: query
+          schema:
+            type: string
+            enum: [asc, desc]
+            default: desc
+          description: Порядок сортировки
 
       responses:
         '200':
@@ -388,269 +452,399 @@ paths:
 
 components:
   schemas:
+    error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Сообщение об ошибке
+          example: "Validation failed"
+        message:
+          type: string
+          description: Детальное описание ошибки
+          example: "Email is required"
+        code:
+          type: integer
+          description: Код ошибки
+          example: 400
+      required:
+        - error
+        - message
+        - code
+
     createUser:
       type: object
-
       properties:
         email:
           type: string
+          format: email
           example: keks@htmlacademy.ru
-
+          description: Электронная почта пользователя
         avatar:
           type: string
-          example: image.jpg
-
+          format: uri
+          example: https://example.com/avatars/image.jpg
+          description: URL аватара пользователя
         name:
           type: string
+          minLength: 1
+          maxLength: 15
           example: Keks
-
+          description: Имя пользователя
         type:
           type: string
           enum: [Base, Pro]
           example: Base
-
+          description: Тип пользователя
         password:
           type: string
+          minLength: 6
+          maxLength: 12
           example: 123456
+          description: Пароль пользователя
+      required:
+        - email
+        - name
+        - type
+        - password
 
     user:
       type: object
-
-      properties:
-        email:
-          type: string
-          example: keks@htmlacademy.ru
-
-        avatar:
-          type: string
-          example: image.jpg
-
-        name:
-          type: string
-          example: Keks
-
-        type:
-          type: string
-          enum: [Base, Pro]
-          example: Base
-
-    createOffer:
-      type: object
-
-      properties:
-        title:
-          type: string
-          example: Big house in the center of the city
-
-        description:
-          type: string
-          example: Big house in the center of the city with all amenities
-
-        image:
-          type: string
-          example: image.jpg
-
-        price:
-          type: number
-          example: 180
-
-        city:
-          type: string
-          enum: [Paris, Cologne, Brussels, Amsterdam, Hamburg, Dusseldorf]
-          example: Paris
-
-        images:
-          type: array
-          items:
-            type: string
-          example: [image1.jpg, image2.jpg]
-
-        isPremium:
-          type: boolean
-          example: true
-
-        rating:
-          type: number
-          example: 3.8
-
-        type:
-          type: string
-          enum: [apartment, house, room, hotel]
-          example: apartment
-
-        roomCount:
-          type: integer
-          example: 2
-
-        guestCount:
-          type: integer
-          example: 4
-
-        amenities:
-          type: array
-          items:
-            type: string
-            enum:
-              [
-                Breakfast,
-                Air conditioning,
-                Laptop friendly workspace,
-                Baby seat,
-                Washer,
-                Towels,
-                Fridge,
-              ]
-            example: [Breakfast, Washer]
-
-        coordinates:
-          type: object
-          properties:
-            latitude:
-              type: number
-              example: 50.4501
-
-            longitude:
-              type: number
-              example: 30.5234
-
-    offer:
-      type: object
-
       properties:
         id:
           type: string
           example: 6329c3d6a04ab1061c6425ea
+          description: Уникальный идентификатор пользователя
+        email:
+          type: string
+          format: email
+          example: keks@htmlacademy.ru
+          description: Электронная почта пользователя
+        avatar:
+          type: string
+          format: uri
+          example: https://example.com/avatars/image.jpg
+          description: URL аватара пользователя
+        name:
+          type: string
+          example: Keks
+          description: Имя пользователя
+        type:
+          type: string
+          enum: [Base, Pro]
+          example: Base
+          description: Тип пользователя
+      required:
+        - id
+        - email
+        - name
+        - type
 
+    createOffer:
+      type: object
+      properties:
         title:
           type: string
+          minLength: 10
+          maxLength: 100
           example: Big house in the center of the city
-
+          description: Название предложения
         description:
           type: string
+          minLength: 20
+          maxLength: 1024
           example: Big house in the center of the city with all amenities
-
-        postDate:
-          type: string
-          format: date
-          example: 2025-05-29T20:44:46.553Z
-
+          description: Описание предложения
         image:
           type: string
-          example: image.jpg
-
-        images:
-          type: array
-          items:
-            type: string
-          example: [image1.jpg, image2.jpg]
-
+          format: uri
+          example: https://example.com/images/image.jpg
+          description: URL главного изображения
+        price:
+          type: number
+          minimum: 100
+          maximum: 100000
+          example: 180
+          description: Цена за ночь в евро
         city:
           type: string
           enum: [Paris, Cologne, Brussels, Amsterdam, Hamburg, Dusseldorf]
           example: Paris
-
+          description: Город расположения
+        images:
+          type: array
+          items:
+            type: string
+            format: uri
+          minItems: 6
+          maxItems: 6
+          example: [
+            "https://example.com/images/image1.jpg",
+            "https://example.com/images/image2.jpg",
+            "https://example.com/images/image3.jpg",
+            "https://example.com/images/image4.jpg",
+            "https://example.com/images/image5.jpg",
+            "https://example.com/images/image6.jpg"
+          ]
+          description: Дополнительные изображения предложения
         isPremium:
           type: boolean
           example: true
-
-        isFavorite:
-          type: boolean
-          example: true
-
+          description: Премиум предложение
         type:
           type: string
           enum: [Apartment, House, Room, Hotel]
-          example: apartment
-
+          example: Apartment
+          description: Тип жилья
+        roomCount:
+          type: integer
+          minimum: 1
+          maximum: 8
+          example: 2
+          description: Количество комнат
         guestCount:
           type: integer
+          minimum: 1
+          maximum: 10
           example: 4
-
-        price:
-          type: number
-          example: 180
-
+          description: Максимальное количество гостей
         amenities:
           type: array
           items:
             type: string
-            enum:
-              [
-                Breakfast,
-                Air conditioning,
-                Laptop friendly workspace,
-                Baby seat,
-                Washer,
-                Towels,
-                Fridge,
-              ]
-            example: [Breakfast, Washer]
-
-        user:
-          $ref: "#/components/schemas/user"
-
-        rating:
-          type: number
-          example: 3.8
-
-        roomCount:
-          type: integer
-          example: 2
-
-        commentsCount:
-          type: integer
-          example: 1
-
+            enum: [
+              Breakfast,
+              Air conditioning,
+              Laptop friendly workspace,
+              Baby seat,
+              Washer,
+              Towels,
+              Fridge
+            ]
+          example: [Breakfast, Washer]
+          description: Удобства
         coordinates:
           type: object
           properties:
             latitude:
               type: number
+              minimum: -90
+              maximum: 90
               example: 50.4501
-
+              description: Широта
             longitude:
               type: number
+              minimum: -180
+              maximum: 180
               example: 30.5234
+              description: Долгота
+          required:
+            - latitude
+            - longitude
+          description: Координаты предложения
+      required:
+        - title
+        - description
+        - image
+        - price
+        - city
+        - images
+        - isPremium
+        - type
+        - roomCount
+        - guestCount
+        - amenities
+        - coordinates
+
+    offer:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 6329c3d6a04ab1061c6425ea
+          description: Уникальный идентификатор предложения
+        title:
+          type: string
+          example: Big house in the center of the city
+          description: Название предложения
+        description:
+          type: string
+          example: Big house in the center of the city with all amenities
+          description: Описание предложения
+        postDate:
+          type: string
+          format: date-time
+          example: 2025-05-29T20:44:46.553Z
+          description: Дата создания предложения
+        image:
+          type: string
+          format: uri
+          example: https://example.com/images/image.jpg
+          description: URL главного изображения
+        images:
+          type: array
+          items:
+            type: string
+            format: uri
+          example: [
+            "https://example.com/images/image1.jpg",
+            "https://example.com/images/image2.jpg"
+          ]
+          description: Дополнительные изображения
+        city:
+          type: string
+          enum: [Paris, Cologne, Brussels, Amsterdam, Hamburg, Dusseldorf]
+          example: Paris
+          description: Город расположения
+        isPremium:
+          type: boolean
+          example: true
+          description: Премиум предложение
+        isFavorite:
+          type: boolean
+          example: true
+          description: В избранном у текущего пользователя
+        type:
+          type: string
+          enum: [Apartment, House, Room, Hotel]
+          example: Apartment
+          description: Тип жилья
+        guestCount:
+          type: integer
+          minimum: 1
+          maximum: 10
+          example: 4
+          description: Максимальное количество гостей
+        price:
+          type: number
+          minimum: 100
+          maximum: 100000
+          example: 180
+          description: Цена за ночь в евро
+        amenities:
+          type: array
+          items:
+            type: string
+            enum: [
+              Breakfast,
+              Air conditioning,
+              Laptop friendly workspace,
+              Baby seat,
+              Washer,
+              Towels,
+              Fridge
+            ]
+          example: [Breakfast, Washer]
+          description: Удобства
+        user:
+          $ref: "#/components/schemas/user"
+        rating:
+          type: number
+          minimum: 1
+          maximum: 5
+          example: 3.8
+          description: Средний рейтинг (от 1 до 5)
+        roomCount:
+          type: integer
+          minimum: 1
+          maximum: 8
+          example: 2
+          description: Количество комнат
+        commentsCount:
+          type: integer
+          minimum: 0
+          example: 1
+          description: Количество комментариев
+        coordinates:
+          type: object
+          properties:
+            latitude:
+              type: number
+              minimum: -90
+              maximum: 90
+              example: 50.4501
+              description: Широта
+            longitude:
+              type: number
+              minimum: -180
+              maximum: 180
+              example: 30.5234
+              description: Долгота
+          required:
+            - latitude
+            - longitude
+          description: Координаты предложения
+      required:
+        - id
+        - title
+        - description
+        - postDate
+        - image
+        - images
+        - city
+        - isPremium
+        - isFavorite
+        - type
+        - guestCount
+        - price
+        - amenities
+        - user
+        - rating
+        - roomCount
+        - commentsCount
+        - coordinates
 
     createComment:
       type: object
-
       properties:
         text:
           type: string
-          example: Everything is perfect
           minLength: 5
           maxLength: 1024
-
+          example: Everything is perfect
+          description: Текст комментария
         rating:
           type: number
+          minimum: 1
+          maximum: 5
           example: 3.8
+          description: Оценка (от 1 до 5)
+      required:
+        - text
+        - rating
 
     comment:
       type: object
-
       properties:
         id:
           type: string
           example: 6329c3d6a04ab1061c6425ec
-
+          description: Уникальный идентификатор комментария
         text:
           type: string
-          example: Everything is perfect
           minLength: 5
           maxLength: 1024
-
+          example: Everything is perfect
+          description: Текст комментария
         postDate:
           type: string
-          format: date
+          format: date-time
           example: 2025-05-31T14:39:06.782Z
-
+          description: Дата создания комментария
         rating:
           type: number
+          minimum: 1
+          maximum: 5
           example: 4.5
-
+          description: Оценка (от 1 до 5)
         author:
           $ref: "#/components/schemas/user"
+      required:
+        - id
+        - text
+        - postDate
+        - rating
+        - author
 
   securitySchemes:
     bearerAuth:
