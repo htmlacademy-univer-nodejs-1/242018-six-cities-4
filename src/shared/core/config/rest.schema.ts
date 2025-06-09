@@ -1,0 +1,101 @@
+import convict from 'convict';
+import validators from 'convict-format-with-validator';
+
+convict.addFormats(validators);
+
+export type RestSchema = {
+  PORT: number;
+  SALT: string;
+  DB_HOST: string;
+  DB_USER: string;
+  DB_PASSWORD: string;
+  DB_PORT: string;
+  DB_NAME: string;
+  UPLOAD_DIRECTORY: string;
+  STATIC_DIRECTORY_PATH: string;
+  STATIC_UPLOAD_ROUTE: string;
+  STATIC_FILES_ROUTE: string;
+  DEFAULT_USER_PASSWORD: string;
+  JWT_SECRET: string;
+};
+
+export const configRestSchema = convict<RestSchema>({
+  PORT: {
+    doc: 'Port for incoming connections',
+    format: 'port',
+    env: 'PORT',
+    default: 4000,
+  },
+  SALT: {
+    doc: 'Salt for password hash',
+    format: String,
+    env: 'SALT',
+    default: null,
+  },
+  DB_HOST: {
+    doc: 'IP address of the database server (MongoDB)',
+    format: 'ipaddress',
+    env: 'DB_HOST',
+    default: '127.0.0.1',
+  },
+  DB_USER: {
+    doc: 'Username to connect to the database',
+    format: String,
+    env: 'DB_USER',
+    default: null,
+  },
+  DB_PASSWORD: {
+    doc: 'Password to connect to the database',
+    format: String,
+    env: 'DB_PASSWORD',
+    default: null,
+  },
+  DB_PORT: {
+    doc: 'Port to connect to the database (MongoDB)',
+    format: 'port',
+    env: 'DB_PORT',
+    default: '27017',
+  },
+  DB_NAME: {
+    doc: 'Database name (MongoDB)',
+    format: String,
+    env: 'DB_NAME',
+    default: 'six-cities',
+  },
+  UPLOAD_DIRECTORY: {
+    doc: 'Directory for upload files',
+    format: String,
+    env: 'UPLOAD_DIRECTORY',
+    default: null
+  },
+  JWT_SECRET: {
+    doc: 'Secret for sign JWT',
+    format: String,
+    env: 'JWT_SECRET',
+    default: null,
+  },
+  STATIC_DIRECTORY_PATH: {
+    doc: 'Path to directory with static resources',
+    format: String,
+    env: 'STATIC_DIRECTORY_PATH',
+    default: null,
+  },
+  STATIC_UPLOAD_ROUTE: {
+    doc: 'Static files upload route',
+    format: String,
+    env: 'STATIC_UPLOAD_ROUTE',
+    default: '/upload',
+  },
+  STATIC_FILES_ROUTE: {
+    doc: 'Static files route',
+    format: String,
+    env: 'STATIC_FILES_ROUTE',
+    default: '/static',
+  },
+  DEFAULT_USER_PASSWORD: {
+    doc: 'Default password for user',
+    format: String,
+    env: 'DEFAULT_USER_PASSWORD',
+    default: 'very-secret-password-1337!',
+  },
+});
